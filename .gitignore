@@ -1,0 +1,15 @@
+# Project exclude paths
+/node_modules/
+/node_modules/agent-base/dist/
+/node_modules/agent-base/README.md
+/node_modules/axios/
+/node_modules/es-errors/
+/node_modules/es-set-tostringtag/
+/node_modules/express/LICENSE
+/node_modules/express/Readme.md
+/node_modules/form-data/
+/node_modules/has-symbols/
+/node_modules/has-tostringtag/
+/node_modules/hasown/
+/node_modules/https-proxy-agent/
+/node_modules/morgan/
