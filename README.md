@@ -61,8 +61,6 @@ MongoDB
 ## EXTRA:
 ```
 - User model
-- MongoDB test
-    - MongoDB-forbindelse (mongoose.connect) + test at modellen gemmer/henter data
 - User controller 
 - Routes
 - Validation middleware

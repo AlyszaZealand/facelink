@@ -20,4 +20,4 @@ const userSchema = new mongoose.Schema({
 // Brugerens posts vil blive gemt som en relation
 // I form af referencer til Post-dokumenter
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema, 'userdb');
