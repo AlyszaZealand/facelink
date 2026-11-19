@@ -2,8 +2,10 @@
 
 # npm dependencies
 - jest - deprecated (not jest-cli)
-- express
 - axios
+- joi
+- supertest
+- express
 - morgen
 - mongoose
 
@@ -11,10 +13,11 @@
 ```
 project-root/
 ├── src/
-│   ├── controllers/     # Håndterer server respons baseret på ruten
+│   ├── config/          # Konfiguration af MongoDB
+│   ├── controllers/     # Håndterer server request og respons baseret på ruten
 │   ├── middleware/      # Validering af input
-│   ├── models/          # Data objekter og kald til api
-│   ├── routes/          # Express routes
+│   ├── models/          # Beskriver brugerens MongoDB-schema og gemmer data
+│   ├── routes/          # Bestemmer URL og HTTP-metode
 │   └── app.js           # Konfiguration af express app
 ├── tests/               
 │   └── api/             # Endpoint test
