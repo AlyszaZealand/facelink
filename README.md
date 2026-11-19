@@ -68,9 +68,13 @@ MongoDB
 - Routes
 - Validation middleware
 - App 
-- Jest test eller Supertest
+- Jest test eller Supertest (måske slet)
     - Kræver require.main === module
     - behøver ikke at starte serveren, men kan teste app direkte
+- node:test
+    - Modeltester kan køres direkte mod modellen
+    - API-tester kan importere app.js uden server.js
+    - (supertest bruges oven i node:test til at sende HTTP-request til app.js, mens test af User-modellen kun skal importere User-modellen.)
 - Server 
 - Postman test
     - Test af hele dataflowet fra POST /users til MongoDB
@@ -101,7 +105,29 @@ MongoDB
 - input, output, statuskoder, valideringsregler, MongoDB-model og testscenarier. 
 - Start praktisk med MongoDB-forbindelsen og User-modellen, derefter endpointet og til sidst tests.
 
+# Mønster
+- Controller: modtager request og sender response
+- Service: indeholder forretningslogik
+    - det kan give mening, men det er ikke nødvendigt i dit nuværende projekt.
+      - Et service-lag er især nyttigt, når:
+      - forretningslogikken bliver større
+      - flere controllers bruger den samme logik
+      - du vil teste logikken uden HTTP-request/response
+      - controllerne skal holdes simple
+      - du senere får flere modeller eller eksterne services
+      - Lige nu er projektet lille, og controlleren er overskuelig. Derfor er det helt acceptabelt at have logikken direkte i userController.js.
+- Model: kommunikerer med databasen
+
 # Tests
+Start med Node.js' indbyggede testværktøj (node:test) og eventuelt Supertest
+
+* En servicetest undersøger forretningslogikken, mens en API-test undersøger HTTP-request, statuskode og response. Du skal kunne forklare forskellen.
+
+- De forskellige værktøjer har forskellige formål:
+- Jest: Et testframework. Det er ikke generelt deprecated.
+- Joi: Bruges til validering af data, ikke som testframework.
+- Supertest: Bruges til at teste HTTP-endpoints i eksempelvis Express.
+- Axios: Bruges til HTTP-kald, men er ikke et testframework.
 
 
 
