@@ -78,6 +78,29 @@ MongoDB
     - model → controller → route → middleware → app → server → POST /users fra Postman → MongoDB
 ```
 
+# Definér endpointets kontrakt
+- POST /users
+- Input: JSON med name og email
+- Succes: 201 Created med den nye bruger
+- Manglende eller ugyldige felter: 400 Bad Request
+- Email findes allerede: eksempelvis 409 Conflict
+- Databasefejl: 500 Internal Server Error
+
+# Test disse scenarier
+- Gyldigt navn og email opretter en bruger
+- Den returnerede bruger har et _id
+- posts starter som []
+- Manglende navn afvises
+- Manglende email afvises
+- Ugyldig email afvises
+- Samme email kan ikke oprettes to gange
+- Brugeren kan ses i MongoDB efter requesten
+
+# readme ændringer
+- Din README kan derfor udvides med en tydelig kravspecifikation: 
+- input, output, statuskoder, valideringsregler, MongoDB-model og testscenarier. 
+- Start praktisk med MongoDB-forbindelsen og User-modellen, derefter endpointet og til sidst tests.
+
 # Tests
 
 
