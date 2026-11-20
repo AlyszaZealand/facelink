@@ -1,12 +1,8 @@
 # Feedback Opgave: FaceLink
 
 # npm dependencies
-- jest - deprecated (not jest-cli)
-- axios
-- joi
-- supertest
 - express
-- morgen
+- morgan
 - mongoose
 
 # Arkitektur (lag og filopsætning)
@@ -20,7 +16,8 @@ project-root/
 │   ├── routes/          # Bestemmer URL og HTTP-metode
 │   └── app.js           # Konfiguration af express app
 ├── tests/               
-│   └── api/             # Endpoint test
+│   └── model/           # Model test - mongoose-modellen validere et brugerdokument korrekt
+├── images/              # Billeder af Postman test til Readme
 ├── server.js            # Starter server og definerer port
 ├── package.json         # Project metadata and dependencies
 └── README.md            # Project documentation
@@ -30,18 +27,18 @@ project-root/
 ```
 POST /users
 ↓
-validation middleware
+Middleware
 ↓
-users route
+User route
 ↓
-users controller
+User controller
 ↓
 User model
 ↓
 MongoDB
 ```
 
-# Gennemgang
+# Gennemgang af data flow
 ```
 - User model
     - Definerer schema for User objektet
@@ -52,7 +49,7 @@ MongoDB
 - Routes
     - Definerer endpoint for at oprette en ny bruger
     - Knytter endpoint til User controller og validation middleware
-- Validation middleware
+- Middleware
     - Tjekker om input data er korrekt formateret
     - Returnerer fejlbeskeder, hvis data ikke er korrekt formateret
 - App
@@ -61,16 +58,13 @@ MongoDB
     - Starter express server og lytter på en specificeret port
 
 ```
-## EXTRA:
+# Hvor test i data flow laves:
 ```
 - User model
 - User controller 
 - Routes
-- Validation middleware
+- Middleware
 - App 
-- Jest test eller Supertest (måske slet)
-    - Kræver require.main === module
-    - behøver ikke at starte serveren, men kan teste app direkte
 - node:test
     - Modeltester kan køres direkte mod modellen
     - API-tester kan importere app.js uden server.js
@@ -99,11 +93,6 @@ MongoDB
 - Ugyldig email afvises
 - Samme email kan ikke oprettes to gange
 - Brugeren kan ses i MongoDB efter requesten
-
-# readme ændringer
-- Din README kan derfor udvides med en tydelig kravspecifikation: 
-- input, output, statuskoder, valideringsregler, MongoDB-model og testscenarier. 
-- Start praktisk med MongoDB-forbindelsen og User-modellen, derefter endpointet og til sidst tests.
 
 # Mønster
 - Controller: modtager request og sender response
