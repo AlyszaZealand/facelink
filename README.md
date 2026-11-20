@@ -164,7 +164,7 @@ Input data:
 } 
 ```
 Output data:
-![img.png](img.png)
+![img.png](POSTusers.png)
 
 
 
