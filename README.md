@@ -129,5 +129,30 @@ Start med Node.js' indbyggede testværktøj (node:test) og eventuelt Supertest
 - Supertest: Bruges til at teste HTTP-endpoints i eksempelvis Express.
 - Axios: Bruges til HTTP-kald, men er ikke et testframework.
 
+```
+Servicetest tester forretningslogikken direkte i en service-funktion uden at sende en HTTP-anmodning.
+API-test tester hele HTTP-endepunktet, eksempelvis at en POST-request til /users:
+•
+sender JSON med Content-Type: application/json
+•
+giver status 201 ved succes eller 400 ved ugyldigt input
+•
+returnerer det forventede JSON-objekt
+•
+får middleware og controller til at spille sammen
+Kort sagt: en servicetest tester hvad der sker, mens en API-test også tester hvordan det hænder via HTTP.
+
+når du sender en HTTP-request gennem Postman til din Express-server og kontrollerer statuskode, headers og response, laver du en manuel API-test.
+
+Jeg har ingen Service-test i mit projekt.
+Jeg har en model test som tester om mongoose-modellen kan validere et brugerdokument korrekt. 
+Jeg har en API-test som tester om POST /users returnerer 201 Created med den nye bruger, når input er gyldigt, og 400 Bad Request, når input er ugyldigt.
+```
+Lav disse 3 test med node:test.
+```
+Kan jeg oprette en bruger med gyldigt navn og email?
+Bliver en bruger uden email afvist?
+Kan jeg oprette to brugere med samme email?
+```
 
 

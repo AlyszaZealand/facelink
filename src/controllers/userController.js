@@ -2,7 +2,7 @@ const User = require('../models/user');
 
 exports.createUser = async (req, res) => {
     const user = new User(req.body);
-    await user.save();
+    await user.save(); // gemmer brugeren i databasen
     res.status(201).json(user);
 };
 
