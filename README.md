@@ -59,7 +59,7 @@ De forskellige værktøjer har forskellige formål:
 # Delopgave 1 - Oprette en brugerprofil (POST /users)
 ## Dataflowet fra POST /users til MongoDB
 ```
-POST /users
+POST /users (Endepunkt)
 ↓
 Middleware
 ↓
@@ -105,7 +105,7 @@ Node.js' indbyggede testværktøj (node:test) og Supertest
 # Delopgave 2 -  Poste en opdatering (POST /users/{id}/posts)
 ## Dataflowet fra POST /users/{id}/posts til MongoDB
 ```
-POST /users/{id}/posts
+POST /users/{id}/posts (Endepunkt)
 ↓
 Middleware
 ↓
