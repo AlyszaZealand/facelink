@@ -155,4 +155,16 @@ Bliver en bruger uden email afvist?
 Kan jeg oprette to brugere med samme email?
 ```
 
+# Oprette en brugerprofil (POST /users)
+Input data:
+```
+{ 
+  "name": "John Doe", 
+  "email": "john.doe@example.com" 
+} 
+```
+Output data:
+![img.png](img.png)
+
+
 
