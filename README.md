@@ -164,7 +164,8 @@ Input data:
 } 
 ```
 Output data:
-![img.png](img.png)
+<img width="1175" height="552" alt="image" src="https://github.com/user-attachments/assets/90f21acf-5ba2-419c-a369-0916898905f0" />
+
 
 
 
