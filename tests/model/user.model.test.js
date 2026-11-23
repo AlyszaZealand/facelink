@@ -1,7 +1,7 @@
 // Modeltest som tester om mongoose-modellen kan validere et brugerdokument korrekt.
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const User = require('../../src/models/user');
+const User = require('../../src/models/userModel');
 
 // Test for User model validation
 test('Kan jeg oprette en bruger med gyldigt navn og email?', async () => {

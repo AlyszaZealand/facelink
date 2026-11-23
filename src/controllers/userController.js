@@ -1,14 +1,22 @@
-const User = require('../models/user');
+const UserService = require('../services/userService');
+
+const userService = new UserService();
 
 exports.createUser = async (req, res) => {
-    const user = new User(req.body);
-    await user.save(); // gemmer brugeren i databasen
-    res.status(201).json(user);
+    try {
+        const user = await userService.createUser(req.body);
+        res.status(201).json(user);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 };
 
 exports.getAllUsers = async (req, res) => {
-    const users = await User.find();
-    res.json(users);
-}
-
+    try {
+        const users = await userService.getAllUsers();
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ error: 'Kunne ikke hente brugere' });
+    }
+};
 

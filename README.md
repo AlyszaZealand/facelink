@@ -15,6 +15,7 @@ project-root/
 │   ├── middleware/      # Validering af input
 │   ├── models/          # Beskriver brugerens MongoDB-schema og gemmer data
 │   ├── routes/          # Bestemmer URL og HTTP-metode
+│   ├── services/        # Indeholder forretningslogik
 │   └── app.js           # Konfiguration af express app
 ├── tests/
 │   ├── api/             # API test - tester HTTP-endpoints
@@ -28,12 +29,12 @@ project-root/
 ## Mønster MVC (Model-View-Controller)
 - Model: kommunikerer med databasen
 - Service: indeholder forretningslogik
-    - Ville ikke give mening i mit nuværende projekt. (for småt)
 - Controller: modtager request og sender response
 
 ## Hvor mine tests hører til i arkitekturen
 ```
 - Model
+- Service
 - Controller 
 - Routes
 - Middleware
@@ -63,24 +64,32 @@ POST /users (Endepunkt)
 ↓
 Middleware
 ↓
-User route
+UserRoutes
 ↓
-User controller
+UserController
 ↓
-User model
+UserService
+↓
+UserModel
 ↓
 MongoDB
 ```
 
 ## Gennemgang af data flow
 ```
-- User model
+- UserModel
     - Definerer schema for User objektet
     - Indeholder metoder til at interagere med MongoDB
-- User controller
-    - Håndterer logik for at oprette en ny bruger
-    - Validerer input og kalder User model for at gemme data
-- Routes
+- UserService
+    - Indeholder forretningslogikken for brugere
+    - Tjekker om email allerede findes
+    - Opretter og gemmer den nye bruger gennem User-modellen
+    - Holder database- og forretningslogik væk fra controlleren
+- UserController
+    - Modtager HTTP-requesten
+    - Kalder UserService
+    - Sender HTTP-response med statuskode og brugerdata
+- UserRoutes
     - Definerer endpoint for at oprette en ny bruger
     - Knytter endpoint til User controller og validation middleware
 - Middleware
@@ -109,9 +118,11 @@ POST /users/{id}/posts (Endepunkt)
 ↓
 Middleware
 ↓
-Post route
+Post routes
 ↓
 Post controller
+↓
+Post service
 ↓
 Post model
 ↓
@@ -122,8 +133,14 @@ MongoDB
 - Post model
     - Definerer schema for Post objektet
     - Indeholder metoder til at interagere med MongoDB
+- Post service
+    - Indeholder forretningslogikken for posts
+    - Tjekker om userId findes i databasen
+    - Opretter og gemmer den nye post gennem Post-modellen
+    - Holder database- og forretningslogik væk fra controlleren
 - Post controller
     - Håndterer logik for at oprette en ny post
+    - Kalder Post service for at håndtere forretningslogik
     - Validerer input og kalder Post model for at gemme data
 - Routes
     - Definerer endpoint for at oprette en ny post
