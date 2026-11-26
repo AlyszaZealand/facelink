@@ -1,23 +1,42 @@
 // UserService uden HTTP-kode som req, res og statuskoder.
-const User = require('../models/userModel');
+const userRepository = require('../repositories/userRepository');
+const AppError = require('../utils/AppError');
 
-class UserService {
-    async createUser(userData) {
-        const existingUser = await User.findOne({
-            email: userData.email
-        });
 
-        if (existingUser) {
-            throw new Error('Email er allerede registreret');
-        }
-
-        const user = new User(userData);
-        return user.save();
+exports.CreateUser = async (newUserData) => {
+    const newUser = await userRepository.createUser(newUserData);
+    if (!newUser) {
+        throw new AppError('Karakteren blev ikke oprettet');
     }
-
-    async getAllUsers() {
-        return User.find();
-    }
+    return newUser;
 }
 
-module.exports = UserService;
+exports.UpdateUser = async (newUserData, id) => {
+    const updatedUser = await userRepository.updateUser(newUserData, id);
+    if (!updatedUser) {
+        throw new AppError('Karakteren blev ikke opdateret');
+    }
+    return updatedUser;
+}
+
+exports.DeleteUser = async (userId) => {
+    const user = await userRepository.deleteUser(userId);
+
+    if (!user) {
+        throw new AppError('Karakteren blev ikke fundet');
+    }
+
+    return null;
+}
+
+exports.GetUserById = async (userId) => {
+    const user = await userRepository.getUserById(userId);
+    if (!user) {
+        throw new AppError('Karakteren blev ikke fundet');
+    }
+    return user;
+}
+
+exports.GetAllUsers = async () => {
+    return await userRepository.getAllUsers();
+}

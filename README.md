@@ -14,13 +14,17 @@ project-root/
 │   ├── controllers/     # Håndterer server request og respons baseret på ruten
 │   ├── middleware/      # Validering af input
 │   ├── models/          # Beskriver brugerens MongoDB-schema og gemmer data
+│   ├── repositories/    # Indeholder metoder til at interagere med databasen
 │   ├── routes/          # Bestemmer URL og HTTP-metode
 │   ├── services/        # Indeholder forretningslogik
+│   ├── utils/           # Indeholder hjælpefunktioner, f.eks. til at validere input
+│   ├── validators/      # Beskriver brugerens MongoDB-schema og gemmer data
 │   └── app.js           # Konfiguration af express app
 ├── tests/
 │   ├── api/             # API test - tester HTTP-endpoints
 │   └── model/           # Model test - mongoose-modellen validere et brugerdokument korrekt
 ├── images/              # Billeder af Postman test til Readme
+├── .env/                # Indeholder miljøvariabler, f.eks. MongoDB URI
 ├── server.js            # Starter server og definerer port
 ├── package.json         # Project metadata and dependencies
 └── README.md            # Project documentation
@@ -56,30 +60,47 @@ De forskellige værktøjer har forskellige formål:
 - Jest: Et testframework. Det er ikke generelt deprecated.
 - Joi: Bruges til validering af data, ikke som testframework.
 - Axios: Bruges til HTTP-kald, men er ikke et testframework.
+- Postman: Bruges til at teste API-endpoints, men er ikke et testframework.
+- Vitest: Et testframework, men ikke indbygget i Node.js.
 
 # Delopgave 1 - Oprette en brugerprofil (POST /users)
 ## Dataflowet fra POST /users til MongoDB
 ```
-POST /users (Endepunkt)
+HTTP POST /users (endpoint)
 ↓
-Middleware
+app.js: express.json() læser request-body
 ↓
-UserRoutes
+UserRoutes: matcher POST /users
 ↓
-UserController
+Validators: UserValidators validerer input data
 ↓
-UserService
+Middleware: validateCreateUser tjekker om input data er korrekt formateret
 ↓
-UserModel
+UserController: kalder UserService
+↓
+UserService: håndterer forretningsregler, fx om email allerede findes
+↓
+UserRepository: læser/skriver brugeren via UserModel
+↓
+UserModel: beskriver Mongoose-schemaet
 ↓
 MongoDB
 ```
 
+```
+Utils: hjælpefunktioner som lagene kan bruge, fx til at validere input data
+```
+
 ## Gennemgang af data flow
 ```
+- MongoDB
+    - Gemmer data i en database
 - UserModel
     - Definerer schema for User objektet
     - Indeholder metoder til at interagere med MongoDB
+- UserRepository
+    - Indeholder metoder til at interagere med databasen
+    - Holder database- og forretningslogik væk fra controlleren
 - UserService
     - Indeholder forretningslogikken for brugere
     - Tjekker om email allerede findes
@@ -89,12 +110,12 @@ MongoDB
     - Modtager HTTP-requesten
     - Kalder UserService
     - Sender HTTP-response med statuskode og brugerdata
-- UserRoutes
-    - Definerer endpoint for at oprette en ny bruger
-    - Knytter endpoint til User controller og validation middleware
 - Middleware
     - Tjekker om input data er korrekt formateret
     - Returnerer fejlbeskeder, hvis data ikke er korrekt formateret
+- UserRoutes
+    - Definerer endpoint for at oprette en ny bruger
+    - Knytter endpoint til User controller og validation middleware
 - App
     - Konfigurerer express app med routes og middleware
 - Server
@@ -114,7 +135,11 @@ Node.js' indbyggede testværktøj (node:test) og Supertest
 # Delopgave 2 -  Poste en opdatering (POST /users/{id}/posts)
 ## Dataflowet fra POST /users/{id}/posts til MongoDB
 ```
-POST /users/{id}/posts (Endepunkt)
+HTTP POST /users/{id}/posts (endpoint)
+↓
+app.js: express.json() læser request-body
+↓
+PostRoutes: matcher POST /users/{id}/posts
 ↓
 Middleware
 ↓

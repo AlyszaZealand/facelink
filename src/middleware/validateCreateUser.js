@@ -1,3 +1,7 @@
+const mongoose = require("mongoose");
+const AppError = require('../utils/AppError')
+
+
 function validateCreateUser(req, res, next) {
     const name = req.body?.name?.trim();
     const email = req.body?.email?.trim();
@@ -43,4 +47,11 @@ function validateCreateUser(req, res, next) {
     next(); // fortsæt til næste middleware eller controller
 }
 
-module.exports = validateCreateUser;
+function validateId(req, res, next) {
+    if (!mongoose.isObjectIdOrHexString(req.params.id)) {
+        return next(new AppError('Ugyldigt ID', 400))
+    }
+    next()
+}
+
+module.exports = { validateCreateUser, validateId };
